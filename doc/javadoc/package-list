@@ -1,11 +1,10 @@
 statalign
-statalign.Jama
-statalign.Jama.util
 statalign.base
 statalign.base.hmm
 statalign.base.thread
+statalign.distance
+statalign.exceptions
 statalign.io
-statalign.io.gui
 statalign.io.input
 statalign.io.input.plugins
 statalign.model.score
@@ -14,6 +13,12 @@ statalign.model.subst
 statalign.model.subst.plugins
 statalign.postprocess
 statalign.postprocess.gui
+statalign.postprocess.gui.treeviews
 statalign.postprocess.plugins
+statalign.postprocess.plugins.benchmarks
+statalign.postprocess.plugins.contree
+statalign.postprocess.plugins.contree.hash
+statalign.postprocess.plugins.contree.test
 statalign.postprocess.utils
 statalign.ui
+statalign.utils

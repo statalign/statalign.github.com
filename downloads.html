@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+      
+<head>
+	<title>StatAlign &ndash; Downloads</title>
+	<link rel="stylesheet" type="text/css" href="StatAlign.css"></link>
+</head>
+<body>
+<div class="allContent">            
+	<div class="headerImage">
+	<div class="pad">
+		<table class="logo">
+		<tr>
+		<td><img class="logo" alt="StatAlign" src="StatAlignLogo.png" width="300"></td>
+		<td class="subtitle">
+			<h3>An Extendable Software Package for Joint Bayesian Estimation of Alignments and Evolutionary Trees</h3>
+		</td>
+		</tr>
+		</table>
+	</div>
+	</div>
+
+	<div id="menu-wrap">
+	<div id="menu">
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li class="first"><a href="downloads.html">Downloads</a></li>
+			<li><a href="doc/user_manual.html">User's manual</a></li>
+			<li><a href="doc/developer_manual.html">For developers</a></li>
+			<li><a href="references.html">References</a></li>
+		</ul>
+	</div>
+	</div>
+
+	<div class="pad">
+	<div class="container">
+		
+		<h4>Downloading StatAlign</h4>
+		<p>
+		StatAlign works on all platforms that support Java and is distributed as a zip archive.
+		<p>
+		&emsp;<a href="http://sourceforge.net/projects/statalign/files/StatAlign-v2.1.zip/download">Download StatAlign v2.1</a> (most recent stable release)
+		<br><br>
+
+		<h4>Getting Java</h4>
+		StatAlign is written in Java and thus requires no installation, but you
+		must have <b>Java 6 or newer</b> on your system. If you do not have such a Java
+		framework, please download the most recent one from:
+		<p>
+		&emsp;<a href="http://www.java.com/getjava/">http://www.java.com/getjava/</a>
+		<br><br>
+
+		<h4>Running StatAlign</h4>
+		Once you have Java, extract the StatAlign zip archive, and double-click the <b>StatAlign.jar</b> file. This will launch the graphical interface where sequences
+		to analyze can be easily loaded from the menus -- see the <a href="doc/user_manual.html">User's manual</a> for more information.
+		<p>
+		Alternatively, StatAlign can also be run from a console, which is
+		recommended for automated, script-driven scenarios. To print the list of command line options use the following command:
+		<p>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>java -jar StatAlign.jar -help</tt>
+		<p>
+		An example command line setup:
+		<p>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>java -Xmx512m -jar StatAlign.jar -ot=Fasta -mcmc=10k,100k,1k seqs.fasta</tt>
+		<p>
+		Here, the <tt>-Xmx512m</tt> option is a standard JVM argument that sets the memory usage limit of the program
+		at 512 MiBs. This is our recommended minimum, and increase it as necessary for large
+		inputs. The <tt>-ot</tt> options selects the output alignment format, <tt>-mcmc</tt> sets MCMC parameters
+		such as the number of burn-in steps and the number of samples, see the user documentation
+		in the Help menu and on-line for tips on how to set these values. The input file must
+		contain the sequences to align in Fasta format.
+		<br><br>
+		
+		<h4>Sources and other version</h4>
+		<p>
+		To browse or download StatAlign's source code and to get access to the most recent developments, please see <a href="https://github.com/statalign/statalign">our github page</a>.
+		<p>
+		If you are looking for an earlier version of StatAlign, check it on <a href="http://sourceforge.net/projects/statalign/files/">SourceForge</a>.
+	</div>
+	</div>
+</div>
+</body>
+</html>

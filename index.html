@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+      
+<head>
+	<title>StatAlign &ndash; Home</title>
+	<link rel="stylesheet" type="text/css" href="StatAlign.css"></link>
+</head>
+<body>
+<div class="allContent">
+	<div class="headerImage">
+	<div class="pad">
+		<table class="logo">
+		<tr>
+		<td><img class="logo" alt="StatAlign" src="StatAlignLogo.png" width="300"></td>
+		<td class="subtitle">
+			<h3>An Extendable Software Package for Joint Bayesian Estimation of Alignments and Evolutionary Trees</h3>
+		</td>
+		</tr>
+		</table>
+	</div>
+	</div>
+
+	<div id="menu-wrap">
+	<div id="menu">
+		<ul>
+			<li class="first"><a href="index.html">Home</a></li>
+			<li><a href="downloads.html">Downloads</a></li>
+			<li><a href="doc/user_manual.html">User's manual</a></li>
+			<li><a href="doc/developer_manual.html">For developers</a></li>
+			<li><a href="references.html">References</a></li>
+		</ul>
+	</div>
+	</div>
+
+	<div class="pad">
+	<div class="container">
+		<h4>Recent news</h4>
+		<font size="-1"><i>24 Feb 2013</i></font><br>
+		<p>
+		StatAlign v2.1 is now available! <a href="https://raw.github.com/statalign/statalign/master/CHANGELOG.txt"><font size="-1">What's new in this release?</font></a>
+		<p>
+		Since version 2.0 StatAlign has built-in RNA-specific features, which include RNA secondary structure prediction from multiple alignments using either a thermodynamic approach (RNAalifold) or a Stochastic Context-Free Grammars approach (PPfold).
+		This methodology allows more reliable structure predictions by incorporating alignment uncertainty. See our paper on the <a href="references.html">References</a> page and <a href="http://www.ncbi.nlm.nih.gov/pubmed/23335014">on PubMed</a>.
+		
+		<p>StatAlign can be accessed from the <a href="downloads.html">Downloads</a> page.
+		<br><br>
+		<h4>What is StatAlign?</h4>
+		<i>StatAlign</i> is an extendable software package for Bayesian
+		analysis of Protein, DNA and RNA sequences.
+		Multiple alignments, phylogenetic trees and evolutionary parameters
+		are co-estimated in a Markov Chain Monte Carlo framework, allowing
+		for reliable measurement of the accuracy of the results.
+		<p>
+		This approach eliminates common artifacts that traditional methods
+		suffer from, at the cost of increased computational time. These
+		artifacts include the dependency of the constructed phylogeny on a
+		single (probably suboptimal) alignment and bias towards the guide
+		tree upon which the alignment relies.
+		<p>
+		The models behind the analysis permit the comparison of evolutionarily
+		distant sequences: the TKF92 insertion-deletion model can be coupled
+		to an arbitrary substitution model. A broad range of models for
+		nucleotide and amino acid data is included in the package and the
+		plug-in management system ensures that new models can be easily added.
+		<p>
+		For more information, please see our papers on the <a href="references.html">References</a> page.
+		<br><br>
+	</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+#menu-wrap {
+	background: #2E2E2E
+/*	#602826;*/
+	
+}
+
+#menu {
+	width: 878px;
+	height: 46px;
+	margin: 0;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 8px;
+	list-style: none;
+	line-height: normal;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	float: left;
+	margin-right: 6px;
+	padding: 5px 20px 5px 20px;
+	background: #4C4D51;
+	border: 1px #575C5F solid;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 14px;
+	color: #FFFFFF;
+}
+
+#menu a:hover {
+	text-decoration: none;
+	background: #682D2A;
+	border: 1px #A44941 solid;
+}
+
+#menu .first a {
+	background: #983D3A;
+	border: 1px #D45951 solid;
+}
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+div.allContent {
+    border: groove;
+    border-color: #2E2E2E;
+    border-width: 3px;
+}
+
+div.pad {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+div.headerImage {
+	background: #6C6D71;
+}
+
+div.container {
+    text-align: justify;
+	font-size: 16px
+}
+
+table.menu {
+    text-align:center;
+    float:left;
+    padding-right: 55px;
+}
+
+td.subtitle {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    font-family:Helvetica, Verdana, sans-serif;
+	font-size:16px;
+	color:white;
+	text-shadow: 3px 3px 5px black;
+/*	color:#EEEEEE;*/
+}
+
+image.logo {
+    float:left;
+}

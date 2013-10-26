@@ -1,12 +1,16 @@
 statalign
 statalign.base
 statalign.base.hmm
+statalign.base.mcmc
 statalign.base.thread
 statalign.distance
-statalign.exceptions
 statalign.io
 statalign.io.input
 statalign.io.input.plugins
+statalign.mcmc
+statalign.model.ext
+statalign.model.ext.plugins
+statalign.model.ext.plugins.structalign
 statalign.model.score
 statalign.model.score.plugins
 statalign.model.subst
@@ -19,6 +23,7 @@ statalign.postprocess.plugins.benchmarks
 statalign.postprocess.plugins.contree
 statalign.postprocess.plugins.contree.hash
 statalign.postprocess.plugins.contree.test
+statalign.postprocess.plugins.structalign
 statalign.postprocess.utils
 statalign.ui
 statalign.utils

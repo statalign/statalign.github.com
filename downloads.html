@@ -62,10 +62,10 @@
 		<p>
 		An example command line setup:
 		<p>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>java -Xmx512m -jar StatAlign.jar -ot=Fasta -mcmc=10k,100k,1k seqs.fasta</tt>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>java -Xmx512m -jar StatAlign.jar -ot=Fasta -mcmc=100k,200k,100 seqs.fasta</tt>
 		<p>
 		Here, the <tt>-Xmx512m</tt> option is a standard JVM argument that sets the memory usage limit of the program
-		at 512 MiBs. This is our recommended minimum, and increase it as necessary for large
+		at 512 MiBs. This is our recommended minimum, to be increased as necessary for large
 		inputs. The <tt>-ot</tt> options selects the output alignment format, <tt>-mcmc</tt> sets MCMC parameters
 		such as the number of burn-in steps and the number of samples, see the user documentation
 		in the Help menu and on-line for tips on how to set these values. The input file must

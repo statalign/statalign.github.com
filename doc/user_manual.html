@@ -54,7 +54,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 <!-- CONTENT_START -->
 
 <h2>StatAlign user's manual</h2>
-<h4>For StatAlign v3.1 &ndash; last updated 24 Nov 2013</h4>
+<h4>For StatAlign v3.0, v3.1 &ndash; last updated 24 Nov 2013</h4>
 
 <i>The most up-to-date version of this document is available from
 <a href="http://statalign.github.com/doc/user_manual.html">StatAlign's website</a>.</i>
@@ -132,7 +132,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 		This is a comprehensive manual for the graphical interface to StatAlign. 
 		Command-line-specific information can be obtained by running
 		<pre>
-		  java -jar StatAlign.jar --help
+		  java -jar StatAlign.jar -help
 		</pre>
 
 		The documentation on this page can be navigated by using the hyperlinks and 
@@ -861,6 +861,26 @@ document.write('<div style="padding: 0 5px 0 5px">');
 		[ <a href="#structalign_output">Output generated</a> ]<br>		
 
 <a name="structalign_introduction">
+<h3>Introduction</h3>
+The protein structure plugin, StructAlign, extends the evolutionary model of StatAlign, allowing for protein structures to be used 
+to help with estimating alignments and phylogenies. Since protein structures typically diverge much more slowly than sequences, 
+this enables evolutionary relationships to be more accurately and reliably recovered even for distantly related proteins. 
+StructAlign also estimates branch-specific rates of structural evolution, which can be used to help infer episodes of 
+increased or decreased selective pressure on structures.
+
+
+<br><br>
+Here we describe the StructAlign options available through the graphical interface.
+Additional options may be available via the command line interface, and can be listed by running
+<pre>
+java -jar StatAlign.jar -help:structal
+</pre>
+
+<h4>References</h4>
+JL Herman, CJ Challis, &Aacute; Nov&aacute;k, J Hein and SC Schmidler, "Simultaneous Bayesian estimation of alignment and phylogeny under a joint sequence-structure model" (<i>submitted, November 2013</i>)<br>
+JL Herman, &Aacute; Nov&aacute;k, CJ Challis, SC Schmidler and J Hein, "StatAlign 3: statistical alignment and phylogenetics with protein structures'' (<i>submitted, November 2013</i>)
+
+
 <a name="structalign_data">
 <h3>Loading structural data</h3>
 The current version of the StructAlign plugin requires that each sequence have an associated 
@@ -918,6 +938,8 @@ Whichever way structures are read in, summary information will be displayed alon
 When each sequence has an associated structure, the MCMC run can be started.<br><br>
 
 <center><a href="img/structalign_screenshot_2.png"><img src="img/structalign_screenshot_2.png" width=400></a></center>
+[ <a href="#structalign_plugin">The protein structure (StructAlign) plugin</a> ] 
+<a href="#structalign_plugin"><img src="img/up.jpg" width="10" height="10" border=0></a>
 
 <a name="structalign_params">
 <h3>Visualising parameter convergence</h3>
@@ -940,6 +962,8 @@ of the alignment column (blue). When the RMSD postprocessing plugin is enabled, 
 associated with each column in the maximum likelihood alignment are output to a <tt>.rmsd.mle</tt> file.<br><br>
 
 <center><a href="img/structalign_screenshot_4.png"><img src="img/structalign_screenshot_4.png" width=400></a></center>
+[ <a href="#structalign_plugin">The protein structure (StructAlign) plugin</a> ] 
+<a href="#structalign_plugin"><img src="img/up.jpg" width="10" height="10" border=0></a>
 
 <a name="structalign_output">
 <h3>Output generated</h3>
@@ -947,18 +971,34 @@ For each run with the StructAlign plugin enabled, a set of additional output fil
 These files all contain as the base name a prefix corresponding to the name of the
 first data file read in, denoted by <tt>FILE</tt> below.
 <ul>
-<li><tt>FILE.struct</tt> -- structural model parameters for each MCMC sample</li>
-<li><tt>FILE.super.pdb</tt> -- maximum likelihood superposition in PDB format</li>
-<li><tt>FILE.rmsd</tt> (optional) -- average pairwise RMSD and tree distances between each leaf</li>
-<li><tt>FILE.rmsd.mle</tt> (optional) -- average pairwise RMSD and B-factors for each column in the maximum likelihood alignment</li>
+<li><tt>FILE.struct</tt> &ndash; structural model parameters for each MCMC sample</li>
+<li><tt>FILE.super.pdb</tt> &ndash; maximum likelihood superposition in PDB format</li>
+<li><tt>FILE.rmsd</tt> (optional) &ndash; average pairwise RMSD and tree distances between each leaf</li>
+<li><tt>FILE.rmsd.mle</tt> (optional) &ndash; average pairwise RMSD and B-factors for each column in the maximum likelihood alignment</li>
 </ul>
-The RMSD trace can be switched on via the <a href="#io_parameters">Output settings</a> menu. The maximum likelihood superposition is outputted to a PDB file, where each structure is present as a separate chain,
+The <tt>.struct</tt> file contains posterior samples for each of the unknown parameters that are estimated as part of the StructAlign model:<br><br>
+
+<table border="1">
+<tr><td>Parameter name</td><td>Meaning</td></tr>
+<tr><td>&tau;</td><td>Overall structural variance (similar to squared radius of gyration, units of &#8491;<sup>2</sup>)</td></tr>
+<tr><td>&epsilon;</td><td>Amount of structural variability attributed to background (non-evolutionary) fluctuations</td></tr>
+<tr><td>&sigma;<sup>2</sup><sub>g</sub></td><td>Global structural diffusivity (&#8491;<sup>2</sup> / subst. per site)</td></tr>
+<tr><td>&sigma;<sup>2</sup><sub>k</sub></td><td>Branch-specific structural diffusivity (&#8491;<sup>2</sup> / subst. per site)</td></tr>
+<tr><td>&nu;</td><td>Variance of branch-specific diffusivity parameters (on a log scale)</td></tr>
+</table><br>
+The first line of the <tt>.struct</tt> file contains the names of the parameters, and each column contains a set of posterior
+samples for the specified parameter. Each row corresponds to one MCMC iteration, beginning after the burn-in period has ended.
+<br><br>
+The RMSD trace can be switched on via the <a href="#io_parameters">Output settings</a> menu. 
+The maximum likelihood superposition is outputted to a PDB file, where each structure is present as a separate chain,
 beginning at 'A'. This can be read by most structural viewing programs, for example VMD 
 <a href="http://www.ks.uiuc.edu/Research/vmd/‎" target="_blank">
 <img src="img/out.jpg" height=15 width=15 border=0> 
 </a>. <br><br>
 <center><a href="img/superposition.png"><img src="img/superposition.png" width=300></a></center>
 <br><br>
+[ <a href="#structalign_plugin">The protein structure (StructAlign) plugin</a> ] 
+<a href="#structalign_plugin"><img src="img/up.jpg" width="10" height="10" border=0></a>
 [ <a href="#contents">Contents</a> ] 
 <a href="#contents"><img src="img/up.jpg" width="10" height="10" border=0></a>
 <br><br>
@@ -988,7 +1028,17 @@ beginning at 'A'. This can be read by most structural viewing programs, for exam
 The RNA plugin performs secondary structure predictions from multiple alignment samples generated by StatAlign. Both a SCFG approach (PPfold)
 and a thermodynamic (RNAalifold) are available.
 <br><br>The advantage of this method of secondary structure prediction is that it considers multipled sampled alignments instead of just a single fixed alignment, as is typically the
-case with comparative secondary structure prediction.
+case with comparative secondary structure prediction.<br><br>
+
+Here we describe the options available through the graphical interface.
+Options available through the command line interface can be listed by running
+<pre>
+java -jar StatAlign.jar -help:rnaalifold
+</pre>
+<pre>
+java -jar StatAlign.jar -help:ppfold
+</pre>
+
 </p>
 
 The following flowchart summarises what StatAlign does when RNA mode is enabled:
@@ -1091,7 +1141,7 @@ The final information entropy value can be found in the ".info" file on the head
 <h3>Alignment similarity</h3>
 <p align="justify">
 In the 'Similarity' tab, a graph is shown depicting the similarity between the first alignment sample and each of the subsequent alignment samples. 
-This provides a visual representation of auto-correlation between alignment samples. The similarity should gradually decrease and reach a plateua as the time between the first sample
+This provides a visual representation of auto-correlation between alignment samples. The similarity should gradually decrease and reach a plateau as the time between the first sample
 and a given alignment becomes large, indicating that enough cycles have been taken between samples that they are no longer significantly auto-correlated.
 <br><br>
 <center><img src="img/rna_example7_similarity.png" width="400"></center>	

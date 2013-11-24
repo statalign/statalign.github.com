@@ -54,7 +54,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 <!-- CONTENT_START -->
 
 <h2>StatAlign user's manual</h2>
-<h4>For StatAlign v3.0 &ndash; last updated 3 Nov 2013</h4>
+<h4>For StatAlign v3.1 &ndash; last updated 24 Nov 2013</h4>
 
 <i>The most up-to-date version of this document is available from
 <a href="http://statalign.github.com/doc/user_manual.html">StatAlign's website</a>.</i>
@@ -63,7 +63,6 @@ document.write('<div style="padding: 0 5px 0 5px">');
 <h2>Contents</h2>
 	[ <a href="#introduction">Introduction</a> ]
 		<div style='padding-left: 2em'>
-		[ <a href="#tutorial">Tutorial</a> ]<br>
 		[ <a href="#about_help">About this manual</a> ]<br>
 		[ <a href="#about_statalign">About StatAlign</a> ]<br>
 		</div>
@@ -86,16 +85,30 @@ document.write('<div style="padding: 0 5px 0 5px">');
 			-->
 		[ <a href="#mcmc_params">MCMC parameters</a> ]<br>
 		</div>
-	[ <a href="#postprocesses">The Post-processing tabulated panels</a> ]<br>
+	[ <a href="#postprocesses">The graphical interface panels</a> ]<br>
 		<div style='padding-left: 2em'>
 		[ <a href="#sequences">Sequences</a> ]<br>
 		[ <a href="#alignment">Alignment</a> ]<br>
 		[ <a href="#loglikelihood">LogLikelihood</a> ]<br>
 		[ <a href="#mpd">MPD</a> ]<br>
 		[ <a href="#tree">Tree</a> ]<br>
+		[ <a href="#consensus_tree">Consensus tree</a> ]<br>
+		[ <a href="#consensus_network">Consensus network</a> ]<br>
+		</div>	
+	<!--[ <a href="#example">An example</a> ]<br>-->
+	<br><br>
+	<b>Model extension plugins:</b><br><br>
+	[ <a href="#structalign_plugin">The protein structure (StructAlign) plugin</a> ]<br>
+		<div style='padding-left: 2em'>
+		[ <a href="#structalign_introduction">Introduction</a> ]<br>	
+		[ <a href="#structalign_data">Loading structural data</a> ]<br>		
+		[ <a href="#structalign_params">Visualising parameter convergence</a> ]<br>		
+		[ <a href="#structalign_ali">Structural annotations on alignment</a> ]<br>		
+		[ <a href="#structalign_output">Output generated</a> ]<br>		
 		</div>
 	[ <a href="#rna_plugin">The RNA plugin</a> ]<br>
 		<div style='padding-left: 2em'>
+		[ <a href="#rna_tutorial">Tutorial</a> ]<br>
 		[ <a href="#rna_introduction">Introduction</a> ]<br>
 		[ <a href="#activating_rna_mode">Activating the RNA mode</a> ]<br>
 		[ <a href="#rna_mode_settings">RNA mode settings</a> ]<br>
@@ -103,44 +116,40 @@ document.write('<div style="padding: 0 5px 0 5px">');
 		[ <a href="#entropy">Information entropy</a> ]<br>
 		[ <a href="#similarity">Similarity</a> ]<br>
 		[ <a href="#rna_output">RNA mode file output</a> ]<br>
-		</div>
-	[ <a href="#example">An example</a> ]<br>
+		</div>	
 
 <!--------------------------------------------------------------------------------------------------->
 <a name="introduction">
 <h2>Introduction</h2>
 	[ <a href="#tutorial">Tutorial</a> ]
 	[ <a href="#about_help">About this manual</a> ]
-	[ <a href="#about_statalign">About StatAlign</a> ]
-	
-	<a name="tutorial">
-	<h3>Tutorial</h3>
-		If you are a first time StatAlign user and are interested in RNA secondary
-		structures, the best place to start is probably the
-		<a href="https://github.com/statalign/statalign/blob/master/tutorial.pdf?raw=true" target="_blank">
-		StatAlign RNA tutorial</a>, which is a concise description
-		of the necessary steps to take to perform a typical sequence analysis.
-		If you are working with DNA/proteins or need a more complete reference about
-		StatAlign's functionality, please keep on reading.
+	[ <a href="#about_statalign">About StatAlign</a> ]		
 
 	<a name="about_help">
 	<h3>About this manual</h3>
 	
 		<p align="justify">
-		This is a comprehensive manual of StatAlign. You can navigate 
-		on this page using the hyperlinks and the <tt>Forward</tt> and
-		<tt>Backward</tt> buttons of your browser. You can also access this manual
-		from StatAlign in the <tt>Help</tt> &#8594; <tt>User's manual</tt> menu.
-		When doing so, clicking the <tt>Home</tt> button reloads this page.<br><br>
+		This is a comprehensive manual for the graphical interface to StatAlign. 
+		Command-line-specific information can be obtained by running
+		<pre>
+		  java -jar StatAlign.jar --help
+		</pre>
+
+		The documentation on this page can be navigated by using the hyperlinks and 
+		the <tt>Forward</tt> and <tt>Backward</tt> buttons of your browser. 
+		This manual can also be accessed from within StatAlign, via the 
+		<tt>Help</tt> &#8594; <tt>User's manual</tt> menu.
+		When using the latter method, clicking the <tt>Home</tt> button reloads this page.<br><br>
 		
 		The topics are arranged in hierarchial order, the <img src="img/up.jpg" width="10" height="10" border=0>
-		arrow takes you one level above.<br><br>
+		arrow moves up one level.<br><br>
 		
 		The <img src="img/out.jpg" height=15 width=15 border=0> arrow indicates a hyperlink
 		outside of the program. You cannot open such a link if your computer
 		is not connected to the internet. Since these hyperlinks point to third party
-		pages, we cannot guarantee that these pages will be there when you are browsing this help file.
-		We also cannot guarantee that these pages will be properly loaded into our mini-browser.<br><br>
+		pages, we cannot guarantee the content of the linked pages. If you discover a broken link,
+		please let us know.
+		<br><br>
 		</p>
 		
 		[ <a href="#introduction">Introduction</a> ] 
@@ -150,34 +159,29 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	<h3>About StatAlign</h3>
 
 		<p align="justify">
-		Statistical alignment methods provide a uniform approach for inferring multiple
-		sequence alignments, evolutionary trees and evolutionary parameters. Bayesian
-		methods for phylogeny inferring typically fix an alignment and consider only
-		substitutions as phylogenetically informative mutations. Statistical alignment
-		methods	model insertions and deletions with the same background philosophy than 
-		substitution models have (ie. time-continuous Markov models
-		<a href="http://en.wikipedia.org/wiki/Models_of_DNA_evolution" target="_blank">
+		StatAlign provides a unified approach for inferring multiple
+		sequence alignments, evolutionary trees and model parameters within a joint Bayesian framework.<br><br>
+
+		Most other methods for phylogenetic inference use a single fixed alignment as input. However, this
+		can result in significant bias in the resulting trees, since the results may be very sensitive to
+		the specific choice of alignment. In addition, these methods typically treat 
+		insertions and deletions (gaps) as missing data, discarding a great deal of important information
+		in the process, and potentially further biasing the results.<br><br>
+		
+		To address these problems, StatAlign jointly samples multiple alignments, evolutionary trees
+		and model parameters under a stochastic model of substitution, insertion and deletion
+		<a href="http://www.biomedcentral.com/1471-2105/9/137" target="_blank">
 		<img src="img/out.jpg" height=15 width=15 border=0>
-		</a>		
-		), but they are technically more involved. Due to these technical limitations,
-		they have been becoming widespread only recently.<br><br>
-	
-		StatAlign provides a graphical interface for doing multiple statistical alignment
-		inferring of DNA, RNA and protein sequences. It applies a Markov chain Monte Carlo
+		</a>, making use of a Markov chain Monte Carlo scheme
 		<a href="http://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo" target="_blank">
 		<img src="img/out.jpg" height=15 width=15 border=0>
 		</a>
-		for walking on the joint Bayesian distribution of multiple alignments, evolutionary trees
-		and evolutionary parameters
-		<a href="http://www.biomedcentral.com/1471-2105/9/137" target="_blank">
-		<img src="img/out.jpg" height=15 width=15 border=0>
-		</a>.
-		The insertion-deletion model is fixed, but the program is flexible to pair
-		any implemented substitution model with the insertion-deletion model.
-		The chosen insertion-deletion model is a modification of the TKF92 model
+		to generate samples from the desired posterior distribution.
+		The program allows a range of different substitution models; the insertion-deletion model 
+		is a modification of the TKF92 model
 		<a href="http://www.ncbi.nlm.nih.gov/pubmed/1556741?dopt=Abstract" target="_blank">
 		<img src="img/out.jpg" height=15 width=15 border=0>
-		</a>, in that it allows 'refragmentation' at internal nodes. For more details,
+		</a>, which allows 'refragmentation' at internal nodes. For more details,
 		see Mikl&oacute;s <i>et al.</i> (2008)
 		<a href="http://www.biomedcentral.com/1471-2105/9/137" target="_blank">
 		<img src="img/out.jpg" height=15 width=15 border=0>
@@ -185,19 +189,14 @@ document.write('<div style="padding: 0 5px 0 5px">');
 		
 		<br><br>
 		
-		Users can load sequences, choose a substitution model with which they want to analyze
-		the sequences. They also can set up the parameters of the Markov chain. Users can specify
-		what kind of information they want about the samples from the MCMC chain 
-		(their log-likelihood value, alignment and tree of the current state, etc.). They can
-		get a consensus alignment in several formats (fasta, Clustal, Phylip and Nexus), and
-		the ensemble of sampled trees in Nexus format. We suggest the sampled trees be
-		further analyzed by <tt>SplitsTree4</tt>
-		<a href="http://www-ab.informatik.uni-tuebingen.de/software/splitstree4/welcome.html" target="_blank">
-		<img src="img/out.jpg" height=15 width=15 border=0>
-		</a>, which can read our output file.<br><br>
+		Users can load sequences, and choose a substitution model with which to analyze
+		the sequences. Once the parameters of the Markov chain and desired output are specified
+		(e.g. log-likelihood trace, alignment, tree samples etc.), the MCMC chain can be initialised,
+		generating a set of samples for the parameters of interest, as well as 
+		consensus alignments and trees.
 		
-		In the next sections, we get through the graphical elements of the program (menu bar, 
-		tabulated panels, pop-up dialog windows), and finally give an example how an analysis can be carried
+		The following sections contain descriptions of the graphical elements of the program (menu bar, 
+		tabulated panels, pop-up dialog windows), with examples illustrating how an analysis can be carried
 		out.<br><br>
 		</p>
 		
@@ -220,17 +219,18 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	<h3>File</h3>
 		
 		<p align="justify">
-		In the File menu, we can load sequences, set the output preferences and 
-		exit the program.
+		In the File menu, we can load sequences (and other types of data if supported by plugins), 
+		set the output preferences and exit the program.
 		
 		<h4><u>Add sequence(s)...</u></h4>
 		<p align="justify">
 		Clicking this menu item will result the pop up of a file opening dialog window.
-		We can browse the directories in this window and open a file. The file to open 
-		should contain sequences in fasta file 
+		We can browse the directories in this window and open a file. The file to be opened 
+		should contain sequences in Fasta file 
 		<a href="http://en.wikipedia.org/wiki/Fasta_format" target="_blank">
 		<img src="img/out.jpg" height=15 width=15 border=0></a>
-		format. Viewing and removing the sequences can be done on the 
+		format (and potentially other types of data, when appropriate plugins exist). 
+		Sequences can be viewed and removed via the 
 		<a href="#sequences"><tt>Sequences</tt></a> panel.</p>
 		
 		<h4><u>Output settings...</u></h4>
@@ -241,7 +241,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 		
 		<h4><u>Exit</u></h4>
 		<p align="justify">
-		We can leave the program here.</p>
+		Exits StatAlign.</p>
 		
 		[ <a href="#menu">The menu bar</a> ] 
 		<a href="#menu"><img src="img/up.jpg" width="10" height="10" border=0></a>
@@ -249,37 +249,33 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	<a name="analysis">
 	<h3>Analysis</h3>
 		
-		<h4><u>Set up and run</u></h4>
+		<h4><u>Run</u></h4>
 		<p align="justify">
 		After loading your sequences and choosing your <a href="#model">Model</a> and <a href="#io_parameters">Output settings</a>, you can click this menu item to set the MCMC parameters and start the MCMC analysis.
-		The <a href="#mcmc_params">MCMC parameters</a> dialog will pop up, where you
-		can set up all MCMC parameters before launching the Analysis with the
-		<tt>Run!</tt> button.
 
 		<p>Information will be given about the progress of the MCMC sampling in the Status
 		bar, such as the number of burn-in steps completed and the number of MCMC samples
 		taken. The <a href="#postprocesses">Postprocessing panels</a> will show both snapshots
-		from the MCMC chain and also consensus entities calculated from the MCMC samples.
-		These latter entities will be updated dynamically with each MCMC sample.
+		from the MCMC chain, as well as various summaries calculated from the MCMC samples.
 
-		<p>When the MCMC analysis terminates you will be notified with a pop-up window that
-		lists all the output files created.
+		<!--<p>When the MCMC analysis terminates you will be notified with a pop-up window that
+		lists all the output files created.-->
 
 		<h4><u>Pause</u></h4>
 		<p align="justify">
-		When an MCMC is running we can suspend the running by clicking this item.
+		We can pause an active MCMC run by clicking this button.
 		</p>	
 
 		<h4><u>Resume</u></h4>
 		<p align="justify">
-		A suspendeded run can be continued by clicking here.
+		A suspended run can be continued by clicking here.
 		</p>	
 		
 		<h4><u>Stop</u></h4>
 		<p align="justify">
 		This item stops an MCMC run. Output files will still be created from the samples
 		that have been taken so far, but you won't be able to restart the process from the
-		same point. So please use it only if you indeed want to terminate the MCMC run early.
+		same point. This should be used only if you indeed want to terminate the MCMC run early.
 		</p>	
 				
 		[ <a href="#menu">The menu bar</a> ] 
@@ -294,10 +290,10 @@ document.write('<div style="padding: 0 5px 0 5px">');
 
 		<p align="justify">
 		This menu is for selecting the substitution model that is used for analyzing the sequences.
-		<i>StatAlign</i> automatically recognizes the sequences, and if sequences cannot be
-		analyzed by the chosen model (for example, protein sequences are forced to be
-		analyzed by a nucleotide model), it notifies the users:<br>
-		<center><img src="img/bad_model.png" width=400 height=256></center><br>
+		<i>StatAlign</i> automatically recognises the sequences, and if sequences cannot be
+		analysed by the chosen model (for example, protein sequences are forced to be
+		analysed by a nucleotide model), a pop-up error box notifies the user.<br>
+		<!--<center><img src="img/bad_model.png" width=400 height=256></center><br>-->
 		<p align="justify">
 		Implemented models are:
 		
@@ -359,7 +355,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 					</a></li>
 				
 				<li>Felsenstein84<br>
-					Felsenstein, J. 1984. Distance methods for inferring phylogenies: a justification. Evolution 38:16�24.
+					Felsenstein, J. 1984. Distance methods for inferring phylogenies: a justification. Evolution 38:16Ð24.
 					</li>
 					
 				<li>Hasegawa-Kishino-Yano  (HKY85)
@@ -444,7 +440,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 		<p align="justify">
 		The output preferences are available via <tt>File</tt> &#8594; <tt>Output settings...</tt>.
 		It will open this pop-up window:
-		<center><img src="img/output_preferences.jpg" width=400 height=256></center><br>
+		<center><img src="img/output_preferences.png" width=400 height=256></center><br>
 		<p align="justify">	
 		Below we describe the possible settings in this window.
 		</p>
@@ -491,7 +487,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 			<p align="justify">
 			Users also can choose which postprocesses generate their own output file. Note
 			that this file has its own format, and might be different from the data written into the log file.
-			For example, the tree postrpocess writes the sampled trees into a standard Nexus file
+			For example, the tree postprocess writes the sampled trees into a standard Nexus file
 			<a href="http://www.bioperl.org/wiki/Nexus_tree_format" target="_blank">
 			<img src="img/out.jpg" height=15 width=15 border=0>
 			</a>
@@ -568,62 +564,77 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	<a href="#settings"><img src="img/up.jpg" width="10" height="10" border=0></a>
 
 	<a name="mcmc_params">
-	<h3>Setting and automating the MCMC parameters</h3>
+	<h3>Setting the MCMC parameters</h3>
 
 		<p align="justify">
-		MCMC parameters dialog window can now be opened using 
-		<tt>Analysis</tt> &#8594; <tt>Set up and run</tt>.
+		The MCMC parameters dialog window can now be opened by clicking on the tool icon 
+		<img src="img/settings.png" width="20" height="20" border=0>, which opens up the MCMC settings dialogue panel.<br><br>
+		<center><img src="img/mcmc_settings.png" width=400 height=256></center><br>
 		In this panel, the following parameters can be set before launching the MCMC run:
 		<ul>
 			<li>Burn-in cycles.<br>
 			<p align="justify">
-			The MCMC starts at a random point. This point might be far from the 
-			desired distribution of alignments, trees and parameters, therefore,
-			the Markov chain needs several steps to get closer the equilibrium 
-			distribution. This period is called burn-in phase. Users can set
-			how many steps at the begining of the Markov chain should be treated as
-			the burn-in period.  
+			The Markov chain underlying the MCMC simulation takes a certain amount of time to 
+			converge to its equilibrium distribution. Only when this convergence is complete
+			will the samples be generated from the correct posterior distribution that we are interested in. 
+			This convergence period is called burn-in phase. Users can set
+			how many steps at the beginning of the Markov chain should be treated as
+			the burn-in period. The number of steps necessary for convergence may vary significantly
+			for different datasets, and it is important to check that the chain has successfully converged.
 			</li>
 			
 			<li>Cycles after burn-in<br>
 			<p align="justify">
-			This is the number of Markov chain steps that the MCMC will do
-			after the burn-in phase.
+			This is the number of Markov chain steps to be taken
+			after the burn-in phase. During these steps, the samples are assumed to be from the 
+			desired posterior distribution, and are used for inference.
 			</li>
 			
-			<li>Sampling rate<br>
+			<li>Sampling rate, <i>c</i><br>
 			<p align="justify">
-			When it is set to a number <i>c</i>, after each <i>c</i> number of
-			steps during the after burn-in period, the Markov chain is sampled, 
-			and the sampled states are 
+			After each <i>c</i> steps during the 
+			post burnin-in period, the state of the Markov chain is recorded, 
+			and 
 			<a href="#postprocesses">postprocessed</a>. 
 			</li>
 			
 			<li>Seed<br>
 			<p align="justify">
 			The Java language provides a random number generator that generates the
-			same pseudo-random numbers
+			pseudo-random numbers
 			<a href="http://en.wikipedia.org/wiki/Pseudorandom_number_generator" target="_blank">
 			<img src="img/out.jpg" height=15 width=15 border=0>
 			</a>
-			starting with a so-called random seed. Users can set this number here.
-			The program generates the same result when the same prameters are used,
-			including the random seed generator. This is useful when one wants the
-			reproduce the result of a run. When the same data should be analyzed
-			with different random starting points (this is needed, for example,
-			for inferring the convergence of the Markov chain), different
-			seeds should be set for different runs.
+			based on a so-called <i>seed</i>. Users can set this seed here.
+			The program generates the same result when the same seed is used. 
+			This is useful when one wants to reproduce the result of a run. 
+			In order to check convergence of the Markov chain, the analysis
+			should be repeated with the same dataset using different random
+			seeds, to generate multiple independent runs. 			
+			</li>
+
+			<li>Randomisation period<br>
+			<p align="justify">
+			This specifies the length of period at the start of the MCMC simulation during 
+			which the state of the chain should be randomly perturbed by accepting all 
+			proposed moves. The purpose of this is to test the sensitivity of the final 
+			results to the initial conditions. The main randomisation occuring in this period
+			is for the tree topology, since most other parameters typically lose memory of their
+			initial state very quickly. A randomisation period of a few hundred steps combined
+			with different random seeds is typically sufficient to ensure that multiple MCMC
+			runs start from significantly different configurations. 
 			</li>
 		</ul>
 		
 		<br><br>
+<!--
 		Alternatively, the user can choose to automate the process of setting one or more of the parameters by checking the corresponding checkboxes:
 		<br><br>
 		<center><img src="img/parameters1.png" border=0></center><br>
 		Automation is not enabled by default because it may result in the termination of the MCMC process before convergence. Our recommendation is that you use the automatic settings to get a reasonable sampling setup when you don't have the resources to experiment with different MCMC settings.
 		
 		</p>
-		
+-->		
 	[ <a href="#settings">Analysis settings</a> ]
 	<a href="#settings"><img src="img/up.jpg" width="10" height="10" border=0></a>
 
@@ -632,33 +643,44 @@ document.write('<div style="padding: 0 5px 0 5px">');
 <!--------------------------------------------------------------------------------------------------->
 
 <a name="postprocesses">
-<h2>The Post-processing tabulated panels</h2>
+<h2>The graphical interface panels</h2>
 	[ <a href="#sequences">Sequences</a> ]
 	[ <a href="#alignment">Alignment</a> ]
 	[ <a href="#loglikelihood">LogLikelihood</a> ]
 	[ <a href="#mpd">MPD</a> ]
 	[ <a href="#tree">Tree</a> ]
+	[ <a href="#consensus_tree">Consensus tree</a> ]
+	[ <a href="#consensus_network">Consensus network</a> ]
 
 	<a name="sequences">
-	<h3>Sequences</h3>
+	<h3>Sequences (and other data)</h3>
 
 		<p align="justify">
 		Sequences can be loaded from the menu, following 
-		<tt>File</tt> &#8594; <tt>Add sequence(s)...</tt>.
+		<tt>File</tt> &#8594; <tt>Add sequence(s)...</tt>, or by selecting the
+		link in the welcome page.
+		<center><img src="img/load_sequences.png" width=400 height=256></center><br>
 		The loaded sequences are shown on the Sequences tabulated panel,
-		in standard Fasta format. For easier visualization, the name of the
+		in standard Fasta format. For easier visualisation, the name of the
 		sequences are highlighted with dark blue, and printed with different
-		type of fonts.<br>
+		type of fonts.<br><br>
 		<center><img src="img/input_sequences.png" width=400 height=256></center><br>
 		<p align="justify">
 		To remove a sequence from the list, click into the desired sequence and
 		then to the <tt>Remove</tt> button. Adding sequences can be done simply
 		by following <tt>File</tt> &#8594; <tt>Add sequence(s)...</tt>.<br>
 
-		The sequences are automatically recognized if they are nucleotide or
+		The sequences are automatically recognised if they are nucleotide or
 		protein sequences, and a default substitution model is associated to them.
-		If the sequences are not recognized, an error message is shown, indicating
-		what are the unknown characters in the input sequences.</p>
+		If the sequences are not recognised, an error message is shown, indicating
+		what are the unknown characters in the input sequences.<br><br>
+
+		When other types of data are added and associated with each sequence, for example
+		<a href="#structalign_introduction">protein structures</a>, these will also appear 
+		alongside the sequence name.
+		</p>
+
+		
 	
 		[ <a href="#postprocesses">The Post-processing tabulated panels</a> ] 
 		<a href="#postprocesses"><img src="img/up.jpg" width="10" height="10" border=0></a>
@@ -668,13 +690,11 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	<h3>Alignment</h3>
 		
 		<p align="justify">
-		The MCMC takes a random walk on the joint distribution of alignments, trees and
+		The MCMC algorithm takes a random walk on the joint distribution of alignments, trees and
 		evolutionary parameters. The current alignment can be seen on the <tt>Alignment</tt>
-		panel. It is in
-		<a href="#statalign_format">
-		<i>
-		StatAlign</i></a>
-		 format.</p>
+		panel. Above the alignment is shown the posterior probability of each alignment column,
+		as estimated from the samples taken so far. This is shown in blue once the burn-in 
+		period is over.</p>
 		<center><img src="img/alignment.png" width=400 height=256></center><br>
 
 		[ <a href="#postprocesses">The Post-processing tabulated panels</a> ] 
@@ -684,10 +704,15 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	<h3>LogLikelihood</h3>
 
 		<p align="justify">
-		The loglikelihood trace is printed onto the screen, so the users can see the 
-		convergence of the chain. The burn-in phase is colored by red, the after-burn-in
-		phase is colored by blue:
-		<center><img src="img/loglikelihood.jpg" width=400 height=256></center><br>
+		The log-likelihood trace is printed onto the screen, to assist with assessing 
+		convergence of the chain. The burn-in phase is coloured in red, and the post burnin-in
+		phase in blue:
+		<center><img src="img/loglikelihood.png" width=400 height=256></center><br>
+		Note that convergence of the log-likelihood is not sufficient
+		to judge convergence of the entire MCMC chain, but lack of convergence of the 
+		log-likelihood certainly indicates that the chain has not converged. 
+		Once the log-likelihood has converged, the distributions of other parameters can be
+		checked to determine whether convergence has been achieved. 
 		</p>
 
 		[ <a href="#postprocesses">The Post-processing tabulated panels</a> ] 
@@ -697,17 +722,17 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	<h3>Maximum Posterior Decoding alignment</h3>
 	
 		<p align="justify">
-		The program <i>on the fly</i> estimates Maximum Posterior Decoding
-		multiple alignments
+		The program estimates summarises the alignment samples so far to produce a 
+		type of consensus alignment, using <i>maximum posterior decoding</i> (MPD)
 		<a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=2324098" target="_blank">
 		<img src="img/out.jpg" height=15 width=15 border=0>
-		</a>. This can be considered as the consensus alignment of the MCMC sampling.
-		The posterior decoding values are printed on top of the alignment showing 
-		certainty (reliability) of the estimated alignment column.
+		</a>. 
+		The posterior probabilities for each column are printed on top of the alignment, indicating
+		the reliability of the corresponding MPD alignment column.
 		<center><img src="img/mpd.png" width=400 height=256></center><br>
 		<p align="justify">
 		The MPD alignment is estimated using only alignment samples from the after-burn-in
-		period, hence alignment is not shown during the burn-in phase in this panel.
+		period, hence the alignment is not shown during the burn-in phase in this panel.
 		</p>
 
 		[ <a href="#postprocesses">The Post-processing tabulated panels</a> ] 
@@ -718,26 +743,244 @@ document.write('<div style="padding: 0 5px 0 5px">');
 	
 		<p align="justify">
 		This panel shows the current tree in the Markov chain.
-		<center><img src="img/tree.jpg" width=400 height=256></center><br>
+		<center><img src="img/tree.png" width=400 height=256></center><br>
+		</p>			
+
+		[ <a href="#postprocesses">The Post-processing tabulated panels</a> ] 
+		<a href="#postprocesses"><img src="img/up.jpg" width="10" height="10" border=0></a>
+	<a name="consensus_tree">
+	<h3>Consensus tree</h3>
+	
+		<p align="justify">
+		This panel shows the majority consensus tree constructed from all the tree samples taken so far
+		<center><img src="img/consensus_tree.png" width=400 height=256></center><br>
+		</p>			
+
+		[ <a href="#postprocesses">The Post-processing tabulated panels</a> ] 
+		<a href="#postprocesses"><img src="img/up.jpg" width="10" height="10" border=0></a>
+	<a name="consensus_network">
+	<h3>Consensus network</h3>
+	
+		<p align="justify">
+		This is similar to the consensus tree, except that unresolved splits are shown as 
+		cycles in a graph, indicating all sampled relationships. 
+		<center><img src="img/consensus_network.png" width=400 height=256></center><br>
 		</p>			
 
 		[ <a href="#postprocesses">The Post-processing tabulated panels</a> ] 
 		<a href="#postprocesses"><img src="img/up.jpg" width="10" height="10" border=0></a>
 
 
+
 [ <a href="#contents">Contents</a> ] 
 <a href="#contents"><img src="img/up.jpg" width="10" height="10" border=0></a>
 <!--------------------------------------------------------------------------------------------------->
+<!--
+<a name="example">
+<h2>An example</h2>
+	
+	<p align="justify">
+	In this example, we will analyze pfcp (Papain Family Cystein Proteinase) 
+	sequences. First we open the file containing 13 sequences downloaded from the
+	HOMSTRAD database
+	<a href="http://tardis.nibio.go.jp/homstrad/" target="_blank">
+	<img src="img/out.jpg" height=15 width=15 border=0>
+	</a>:
+	<center><img src="img/example1.png" width=400 height=256>
+	<img src="img/example2.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">
+	We can see the loaded sequences in the <tt>Sequences</tt> panel:
+	<center><img src="img/example3.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">	
+	Then we set the output preferences. We select all possible posterior analyzis and
+	output files, and we opt to get alignments in nexus format:
+	<center><img src="img/example4.png" width=400 height=256>
+	<img src="img/example5.png" width=400 height=256>
+	<img src="img/example6.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">
+	After this we start the MCMC analysis with the default parameters (10000 burn-in
+	steps, 100000 steps after burn-in, sampled after each 1000 steps, random seed is set to
+	1):
+	<center><img src="img/example7.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">
+	We have to give the name of the output files, and after this the analysis starts:
+	<center><img src="img/example7a.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">	
+	The first state is generated by an iterative alignment, which takes time. Indeed,
+	this step takes as much time as a Clustal-W multiple alignment itself. <i>StatAlign</i>
+	warns the users that the initialization takes time:
+	<center><img src="img/example8.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">		
+	We can see the loglikelihood values quickly increasing in the burn-in phase:
+	<center><img src="img/example9.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">
+	The loglikelihood trace analysis reveals that the 10000 steps were enough for convergence, 
+	however, there is a significant autocorrelation, and hence 100000 steps were not enough to
+	get a sufficient sample size:
+	<center><img src="img/example10.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">
+	Indeed, these sequences are very hard to analyze, as they contain several variable region.
+	Small posterior probabilities on top of the MPD alignment indicate these regions:
+	<center><img src="img/example11.png" width=400 height=256>
+	</center><br>
+	</p>
+	<p align="justify">
+	The sampled trees are written in nexus format, and can be opened with SplitsTree4. 
+	The consensus network analysis of SplitsTree4 shows the phylogenetic uncertainty:
+	<center><img src="img/example12.png" width=400 height=256>
+	</center><br>
+	</p>
+
+	[ <a href="#contents">Contents</a> ] 
+<a href="#contents"><img src="img/up.jpg" width="10" height="10" border=0></a>
+--->
+<br><br>
+
+<a name="structalign_plugin">
+<h2>The protein structure (StructAlign) plugin</h2>
+		[ <a href="#structalign_introduction">Introduction</a> ]<br>	
+		[ <a href="#structalign_data">Loading structural data</a> ]<br>		
+		[ <a href="#structalign_params">Visualising parameter convergence</a> ]<br>		
+		[ <a href="#structalign_ali">Structural annotations on alignment</a> ]<br>		
+		[ <a href="#structalign_output">Output generated</a> ]<br>		
+
+<a name="structalign_introduction">
+<a name="structalign_data">
+<h3>Loading structural data</h3>
+The current version of the StructAlign plugin requires that each sequence have an associated 
+structure before the MCMC run can be started. 
+(In future versions it will also be possible to run with structures associated with
+only some of the sequences.)<br><br>
+
+Protein structures can be loaded and associated with sequences in one of two ways:
+<ol> 
+<li> reading in sequences and structures directly from a <tt>.pdb</tt> file</li>
+<li> separately or simultaneously loading sequences, and structures from a <tt>.coor</tt> file</li>
+</ol>
+
+The first method is the simplest way to read in sequences and structures together, and simply requires 
+choosing <tt>File</tt> &#8594; <tt>Add sequence(s)...</tt>, and selecting a valid PDB
+<a href="http://www.pdb.org" target="_blank">
+<img src="img/out.jpg" height=15 width=15 border=0> 
+</a>
+file from the filesystem. This file should contain only a single chain. If multiple conformations are present for any atoms
+then the first conformation will be used. The alpha carbon atom is used as the location for each residue.
+Several structures can be added simultaneously using this
+method, by selecting multiple PDB files at the same time, by clicking and using the <tt>Ctrl</tt> key 
+(or the <tt>Command</tt> key on a Mac).<br><br>
+
+<center><a href="img/structalign_screenshot_1.png"><img src="img/structalign_screenshot_1.png" width=400></a></center>
+<br><br>
+The second method requires that sequence files <a href="#sequences">already be loaded</a>, or selected and read
+in at the same time as the structures. Although this method requires more preliminary steps than the 
+PDB-based method, it allows for additional flexibility for users with advanced requirements.
+The coordinates of the protein structures should be contained in a <tt>.coor</tt> file
+with the following format:
+<pre>
+>name1
+36.587	49.012	31.672	 54.01
+35.023	49.494	28.184	 53.01
+...     ...     ...      ...
+>name2
+58.559	46.653	71.532	 62.34
+57.828	45.597	67.975	 55.06
+...     ...     ...      ...
+</pre>
+The first three columns represent the x, y and z coordinates of a single atom associated with each
+residue in the structure. Typically this will be the alpha carbon. The name of the structure
+should appear before the start of the coordinates, and the names (<tt>name1</tt> and <tt>name2</tt> in the 
+above example) should match the names of the sequences to which the structures will be associated. 
+The fourth column is optional, and contains the crystallographic B-factors associated with each
+triplet of atomic coordinates. If present, the B-factor data is used to allow structural heterogeneity
+to be incorporated into the evolutionary model. (This information is included by default when 
+structures are read in from a PDB file.)
+<br><br>
+
+<center><a href="img/structalign_screenshot_1a.png"><img src="img/structalign_screenshot_1a.png" width=400></a></center>
+<br><br>
+Whichever way structures are read in, summary information will be displayed alongside the associated sequence in the Sequence panel.
+When each sequence has an associated structure, the MCMC run can be started.<br><br>
+
+<center><a href="img/structalign_screenshot_2.png"><img src="img/structalign_screenshot_2.png" width=400></a></center>
+
+<a name="structalign_params">
+<h3>Visualising parameter convergence</h3>
+To assist with monitoring convergence of the parameters associated with the structural model, there
+is a GUI panel that shows trace plots for each parameter. Values in the burn-in period are shown in red,
+and after the burn-in, in blue. When all of these trace plots have stabilised, this is
+a good indicator that the MCMC chain has converged to the desired stationary distribution. Also shown in the
+top-left of these plots is the current acceptance ratio for MCMC moves on each parameter. Ideally these
+should end up between 0.2 and 0.4. If any of these values are significantly outside this range once the
+burn-in is complete, it may imply that a longer <a href="#mcmc_params">burn-in period</a> should be used.<br><br>
+
+<center><a href="img/structalign_screenshot_3.png"><img src="img/structalign_screenshot_3.png" width=400></a></center>
+<a name="structalign_ali">
+
+<h3>Structural annotations on alignment</h3>
+As an additional aid to analysing the output, two additional tracks are added above the current alignment. 
+These correspond to the average pairwise RMSD for each column (red), and the predicted heterogeneity
+derived from crystallographic B-factors when available (green). These are shown alongside the posterior probability
+of the alignment column (blue). When the RMSD postprocessing plugin is enabled, the pairwise RMSD and B-factor
+associated with each column in the maximum likelihood alignment are output to a <tt>.rmsd.mle</tt> file.<br><br>
+
+<center><a href="img/structalign_screenshot_4.png"><img src="img/structalign_screenshot_4.png" width=400></a></center>
+
+<a name="structalign_output">
+<h3>Output generated</h3>
+For each run with the StructAlign plugin enabled, a set of additional output files is generated.
+These files all contain as the base name a prefix corresponding to the name of the
+first data file read in, denoted by <tt>FILE</tt> below.
+<ul>
+<li><tt>FILE.struct</tt> -- structural model parameters for each MCMC sample</li>
+<li><tt>FILE.super.pdb</tt> -- maximum likelihood superposition in PDB format</li>
+<li><tt>FILE.rmsd</tt> (optional) -- average pairwise RMSD and tree distances between each leaf</li>
+<li><tt>FILE.rmsd.mle</tt> (optional) -- average pairwise RMSD and B-factors for each column in the maximum likelihood alignment</li>
+</ul>
+The RMSD trace can be switched on via the <a href="#io_parameters">Output settings</a> menu. The maximum likelihood superposition is outputted to a PDB file, where each structure is present as a separate chain,
+beginning at 'A'. This can be read by most structural viewing programs, for example VMD 
+<a href="http://www.ks.uiuc.edu/Research/vmd/‎" target="_blank">
+<img src="img/out.jpg" height=15 width=15 border=0> 
+</a>. <br><br>
+<center><a href="img/superposition.png"><img src="img/superposition.png" width=300></a></center>
+<br><br>
+[ <a href="#contents">Contents</a> ] 
+<a href="#contents"><img src="img/up.jpg" width="10" height="10" border=0></a>
+<br><br>
 
 <a name="rna_plugin">
 <h2>The RNA plugin</h2>
-[ <a href="#rna_introduction">Introduction</a> ]
-[ <a href="#activating_rna_mode">Activating the RNA mode</a> ]
-[ <a href="#rna_mode_settings">RNA mode settings</a> ]
-[ <a href="#rna_visualisation">RNA mode visualisation</a> ]
-[ <a href="#entropy">Information entropy</a> ]
-[ <a href="#similarity">Similarity</a> ]
-[ <a href="#rna_output">RNA mode file output</a> ]
+[ <a href="#rna_tutorial">Tutorial</a> ]<br>
+[ <a href="#rna_introduction">Introduction</a> ]<br>
+[ <a href="#activating_rna_mode">Activating the RNA mode</a> ]<br>
+[ <a href="#rna_mode_settings">RNA mode settings</a> ]<br>
+[ <a href="#rna_visualisation">RNA mode visualisation</a> ]<br>
+[ <a href="#entropy">Information entropy</a> ]<br>
+[ <a href="#similarity">Similarity</a> ]<br>
+[ <a href="#rna_output">RNA mode file output</a> ]<br>
+
+<a name="rna_tutorial">
+	<h3>Tutorial</h3>
+		If you are a first time StatAlign user and are interested in RNA secondary
+		structures, the best place to start is probably the
+		<a href="tutorial.pdf" target="_blank">
+		StatAlign RNA tutorial</a>, which is a concise description
+		of the necessary steps to take to perform a typical analysis on RNA sequences.
 
 <a name="rna_introduction">
 <h3>Introduction</h3>
@@ -747,6 +990,7 @@ and a thermodynamic (RNAalifold) are available.
 <br><br>The advantage of this method of secondary structure prediction is that it considers multipled sampled alignments instead of just a single fixed alignment, as is typically the
 case with comparative secondary structure prediction.
 </p>
+
 The following flowchart summarises what StatAlign does when RNA mode is enabled:
 <center><a href="img/flowchart1.png"><img src="img/flowchart1.png" width=400></a></center>
 
@@ -801,7 +1045,7 @@ Once the RNA mode is activated it will run alongside the normal StatAlign run.
 <a name="rna_visualisation">
 <h3>RNA mode visualisation</h3>
 <p align="justify">
-During and after the run there are various tabs available for secondary structure visualisation. The first is the "Consensus Structure" tab which utilizes VARNA (Darty et al. (2009)) to display
+During and after the run there are various tabs available for secondary structure visualisation. The first is the "Consensus Structure" tab which utilises VARNA (Darty et al. (2009)) to display
 the consensus secondary structure. Two modes are available: "<b>Normal</b>" mode which displays the nucleotides using a set of 4 colours to represent each base and a "<b>Probability mode</b>" which
 represents unpaired nucleotides in <font color="red">red</font> and base-paired nucleotides in <font color="blue">blue</font>. Where the intensity of the <font color="red">red</font> or <font color="blue">blue</font> represents the probability that a nucleotide is unpaired or the probability that a pair of
 nucleotides are base-paired, respectively.		
@@ -904,81 +1148,6 @@ Example summary file:
 <!--------------------------------------------------------------------------------------------------->
 
 
-<a name="example">
-<h2>An example</h2>
-	
-	<p align="justify">
-	In this example, we will analyze pfcp (Papain Family Cystein Proteinase) 
-	sequences. First we open the file containing 13 sequences downloaded from the
-	HOMSTRAD database
-	<a href="http://tardis.nibio.go.jp/homstrad/" target="_blank">
-	<img src="img/out.jpg" height=15 width=15 border=0>
-	</a>:
-	<center><img src="img/example1.png" width=400 height=256>
-	<img src="img/example2.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">
-	We can see the loaded sequences in the <tt>Sequences</tt> panel:
-	<center><img src="img/example3.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">	
-	Then we set the output preferences. We select all possible posterior analyzis and
-	output files, and we opt to get alignments in nexus format:
-	<center><img src="img/example4.png" width=400 height=256>
-	<img src="img/example5.png" width=400 height=256>
-	<img src="img/example6.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">
-	After this we start the MCMC analysis with the default parameters (10000 burn-in
-	steps, 100000 steps after burn-in, sampled after each 1000 steps, random seed is set to
-	1):
-	<center><img src="img/example7.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">
-	We have to give the name of the output files, and after this the analysis starts:
-	<center><img src="img/example7a.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">	
-	The first state is generated by an iterative alignment, which takes time. Indeed,
-	this step takes as much time as a Clustal-W multiple alignment itself. <i>StatAlign</i>
-	warns the users that the initialization takes time:
-	<center><img src="img/example8.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">		
-	We can see the loglikelihood values quickly increasing in the burn-in phase:
-	<center><img src="img/example9.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">
-	The loglikelihood trace analysis reveals that the 10000 steps were enough for convergence, 
-	however, there is a significant autocorrelation, and hence 100000 steps were not enough to
-	get a sufficient sample size:
-	<center><img src="img/example10.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">
-	Indeed, these sequences are very hard to analyze, as they contain several variable region.
-	Small posterior probabilities on top of the MPD alignment indicate these regions:
-	<center><img src="img/example11.png" width=400 height=256>
-	</center><br>
-	</p>
-	<p align="justify">
-	The sampled trees are written in nexus format, and can be opened with SplitsTree4. 
-	The consensus network analysis of SplitsTree4 shows the phylogenetic uncertainty:
-	<center><img src="img/example12.png" width=400 height=256>
-	</center><br>
-	</p>
-
-	[ <a href="#contents">Contents</a> ] 
-<a href="#contents"><img src="img/up.jpg" width="10" height="10" border=0></a>
-<!--------------------------------------------------------------------------------------------------->
-<br><br>
 
 <!-- CONTENT_END -->
 

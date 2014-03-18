@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+      
+<head>
+	<title>StatAlign &ndash; Home</title>
+	<link rel="stylesheet" type="text/css" href="WeaveAlign.css"></link>
+</head>
+<body>
+<div class="allContent">
+	<div class="headerImage">
+	<div class="pad">
+		<table class="logo">
+		<tr>
+		<td><img class="logo" alt="WeaveAlign" src="WeaveAlignLogo.png" width="300"></td>
+		<td class="subtitle">
+			<h3>Multiple sequence analysis in the presence alignment uncertainty, using directed acyclic graphs</h3>
+		</td>
+		</tr>
+		</table>
+	</div>
+	</div>
+
+	<div id="menu-wrap">
+	<div id="menu">
+		<ul>
+			<li class="first"><a href="index.html">Home</a></li>
+			<li><a href="downloads.html">Downloads</a></li>
+			<li><a href="doc/user_manual.html">User manual</a></li>
+			<li><a href="references.html">References</a></li>
+		</ul>
+	</div>
+	</div>
+
+	<div class="pad">
+	<div class="container">
+		<h3>Recent news</h3>
+		<font size="-1"><i>18 Mar 2014</i></font><br>
+		<p>
+		WeaveAlign v2.2 is released. (<a href="https://raw.github.com/statalign/WeaveAlign/master/CHANGELOG.txt" target="_blank">What's new in this version?</a>)
+		<p>
+		<p>WeaveAlign is available from the <a href="downloads.html">Downloads</a> page.<br><br>		
+		
+		<br><br>
+		<h4>What is WeaveAlign?</h4>
+		<i>WeaveAlign</i> is a framework for combining a collection of multiple sequence alignments into a directed acyclic graph (DAG) structure, so as to permit efficient inference 
+<p>
+Due to interchanges and crossovers in the DAG, the number of alignments encoded in the graph is typically many orders of magnitude greater than the number of alignment samples used to generate the DAG, such that the effective sample size is greatly increased by this representation.
+<p>
+This allows for more efficient estimation of the posterior probabilities of each sampled alignment, and enables summary alignments to be generated that maximise the expected accuracy under various different types of score functions. 
+<p>
+The DAG structure also facilitates the propagation of alignment uncertainty into downstream inference, allowing for various algorithms to be carried out on the very large space of possible alignments encoded in the graph. 
+		<p>
+		For more information, please see our papers on the <a href="references.html">References</a> page.
+		<br><br>
+	</div>
+	</div>
+</div>
+</body>
+</html>

@@ -61,26 +61,55 @@ document.write('<div style="padding: 0 5px 0 5px">');
 <b>For WeaveAlign v1.2 &ndash; last updated 02 Sep 2014</b>
 
 <h3> Get WeaveAlign </h3>
+To get a ready-to-run WeaveAling you can choose any of two options: download a stable version (a runnable .jar file), or build your own WeaveAlign 
+from the latest source files.
+
 <h4>Download stable version 1.2</h4>
 <i>TODO</i>
 
 <br />
 
-<h4>Or build the development version </h4>
+<h4>Build the latest development version </h4>
 On a Linux machine with git and Java (alt least version 1.6) it's easy to compile WeaveAlign for yourself:
 <ol>
   <li> Install <a href="http://www.gradle.org/installation">Gradle</a> (1.5 or more recent) </li> 
   <li> Fetch sources from GitHub: <code> git clone https://github.com/statalign/WeaveAlign.git </code> </li>
-  <li> Compile: in the project root (WeaveAlign directory) run the build scipt: <code> ./build.sh </code> </li>
+  <li> Compile: in the project root (WeaveAlign directory) run the build script: <code> ./build.sh </code> </li>
 </ol>
 <br />
 <br />
 
+<h4> How to use </h4>
+WeaveAlign expects a set of input alignments, and will build up an alignment network of the provided alignments. 
+Then many new alignment paths (probably different from all the inputs) will be computed and a ,,best'' one will be selected.
 
-<br />
+Run 
+<tt>java -jar WeaveAlign.jar -help</tt>
+to get help.
 
-<h3> Run the example </h3>
-You can run a simple example: <code> ./run-example.sh </code>
+<h3> Run the example (Linux)</h3>
+You can run a small example bash script: <code> ./run-example.sh </code> <br />
+
+Have a look at the script itself, it's quite simple.
+
+Here's in brief what will happen:
+<ol>
+  <li> 500 alignments will be unpacked from a zip file to be used as the set of input alignments</li> 
+  <li> WeaveAlign will be called to build the network and select a good alignment </li>
+  <li> The selected WeaveAlignment will be evaluated against a reference alignment, as well as the input alignments, so that
+       we can see if we got a better result by combining the alignments </li>
+</ol>
+
+While the script is being run, you'll see some info printed to the screen. 
+What you should see at the end is this: 
+
+<code> 
+------------------------
+WeaveAlign's alignment scores better than 91.64 percent of the input alignments (FSA score).
+------------------------
+</code>
+
+
 <i> TODO </i>
 
 <p>

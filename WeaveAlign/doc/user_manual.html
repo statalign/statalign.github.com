@@ -60,27 +60,13 @@ document.write('<div style="padding: 0 5px 0 5px">');
 
 <b>For WeaveAlign v1.2 &ndash; last updated 02 Sep 2014</b>
 
-<h3> Get WeaveAlign </h3>
+<h4> Get WeaveAlign </h4>
 To get a ready-to-run WeaveAling you can choose any of two options: download a stable version (a runnable .jar file), or build your own WeaveAlign 
 from the latest source files.
 
-<h4>Download stable version 1.2</h4>
-<i>TODO</i>
-
+For details, visit the <a href="../downloads.html">Downloads</a> page.
 <br />
 
-<h4>Build the latest development version </h4>
-On a Linux machine with git and Java (at least version 1.6) it's easy to compile WeaveAlign for yourself:
-<ol>
-  <li> Fetch sources from GitHub: <code> git clone https://github.com/statalign/WeaveAlign.git </code> </li>
-  <li> If you don't have Gradle (1.5 or more recent), then install it <a href="http://www.gradle.org/installation">by hand</a> or run this scipt (*) from the root of the WeaveAlign repository <code> ./install_gradle.sh </code>  </li> 
-  <li> Compile: in the project root (WeaveAlign directory) run the build script: <code> ./build.sh </code> </li>
-</ol>
-
-
-<p style="font-size:15px">
-(*) <i>Note:</i> it was tested on Ubuntu 14.04 only, but should work on other Linux boxes with bash and java.
-</p>
 
 <h4> How to use </h4>
 WeaveAlign expects a set of input alignments, and will build up an alignment network of the provided alignments. 
@@ -111,9 +97,15 @@ What you should see at the end is this:
 
 <p>
 <code> 
-------------------------<br />
-WeaveAlign's alignment scores better than 91.64 percent of the input alignments (FSA score).<br />
-------------------------<br />
+Summary of results:<br />
+-------------------<br />
+Ref alignment size: 15  width: 144<br />
+WeaveAlign sum-of-pairs (AMA) score = 0,698<br />
+AMA scores for inputted alignment samples:<br />
+Percentile          5%         50%         95%<br />
+Score            0,617       0,671       0,715<br />
+<br />
+Rank score = 83.6 (WeaveAlign's alignment scores better than 83.6% of the input alignments, using the sum-of-pairs score)<br />
 </code>
 
 <br />
@@ -121,7 +113,7 @@ WeaveAlign's alignment scores better than 91.64 percent of the input alignments 
 <p style="font-size:15px">
 (**) <i> Note: </i> you can specify the input files and output location 
 by editing the <code>run_example.sh </code> script to read in another set 
-of fsa alignment files, and/or modifying the config file of the evaluation step 
+of .fsa alignment files, and/or modifying the config file of the evaluation step 
 (the parameters set fot the example can be found here within 
 the git repo: <code>testdata/testrun500.properties</code>).
 </p>

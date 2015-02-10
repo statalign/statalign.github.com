@@ -54,7 +54,7 @@ document.write('<div style="padding: 0 5px 0 5px">');
 <!-- CONTENT_START -->
 
 <h2>StatAlign user's manual</h2>
-<h4>For StatAlign v3.1 &ndash; last updated 24 Nov 2013</h4>
+<h4>For StatAlign v3.2 &ndash; last updated 9 Feb 2015</h4>
 
 <i>The most up-to-date version of this document is available from
 <a href="http://statalign.github.com/doc/user_manual.html">StatAlign's website</a>.</i>
@@ -449,7 +449,7 @@ The table below shows the default set of output files generated:
 <tr><td>.ctree</td><td>Consensus tree taken from samples so far. Internal nodes are labelled with posterior probability for the split preceding the node.</td></tr>
 <tr><td>.coreModel.params</td><td>Parameters of the core evolutionary model (usually indel and substitution rates)</td></tr>
 <tr><td>.ll</td><td>Log likelihood for each MCMC sample. The first column contains the contribution from the core evolutionary model, and the second column contains the total including contributions from model extension plugins.</td></tr>
-<tr><td>.mpd</td><td>Contains the minimum-risk (also termed <i>maximum posterior decoding</i>) summary alignment.</td></tr>
+<tr><td>.mpd.ali</td><td>Contains the minimum-risk (also termed <i>maximum posterior decoding</i>) summary alignment.</td></tr>
 <tr><td>.mpd.scores</td><td>Per-column marginal posterior probabilities for each alignment column in the MPD alignment.</td></tr>
 <tr><td>.ali</td><td>Sampled alignments (several possible formats). By default this file is not created, since the alignments are printed to the <tt>.log</tt> file instead.</td></tr>
 </table><br>
@@ -945,6 +945,8 @@ structures are read in from a PDB file.)
 
 <center><a href="img/structalign_screenshot_1a.png"><img src="img/structalign_screenshot_1a.png" width=400></a></center>
 <br><br>
+As of StructAlign v1.1 (released with StatAlign v3.2), analysis is also possible in cases where structures are available only for subsets of the sequences in the dataset, provided that at least two structures are included.
+<br><br>
 Whichever way structures are read in, summary information will be displayed alongside the associated sequence in the Sequence panel.
 When each sequence has an associated structure, the MCMC run can be started.<br><br>
 
@@ -982,12 +984,13 @@ For each run with the StructAlign plugin enabled, a set of additional output fil
 These files all contain as the base name a prefix corresponding to the name of the
 first data file read in, denoted by <tt>FILE</tt> below.
 <ul>
-<li><tt>FILE.struct</tt> &ndash; structural model parameters for each MCMC sample</li>
-<li><tt>FILE.super.pdb</tt> &ndash; maximum likelihood superposition in PDB format</li>
+<li><tt>FILE.struct.params</tt> &ndash; structural model parameters for each MCMC sample</li>
+<li><tt>FILE.struct.tree</tt> &ndash; tree samples with edge lengths replaced by &sigma;<sup>2</sup><sub>k</sub> (see below for definition)</li>
+<li><tt>FILE.mle.super.pdb</tt> &ndash; maximum likelihood superposition in PDB format</li>
 <li><tt>FILE.rmsd</tt> (optional) &ndash; average pairwise RMSD and tree distances between each leaf</li>
 <li><tt>FILE.rmsd.mle</tt> (optional) &ndash; average pairwise RMSD and B-factors for each column in the maximum likelihood alignment</li>
 </ul>
-The <tt>.struct</tt> file contains posterior samples for each of the unknown parameters that are estimated as part of the StructAlign model:<br><br>
+The <tt>.struct.params</tt> file contains posterior samples for each of the unknown parameters that are estimated as part of the StructAlign model:<br><br>
 
 <table border="1">
 <tr><td>Parameter name</td><td>Meaning</td></tr>
@@ -997,7 +1000,7 @@ The <tt>.struct</tt> file contains posterior samples for each of the unknown par
 <tr><td>&sigma;<sup>2</sup><sub>k</sub></td><td>Branch-specific structural diffusivity (&#8491;<sup>2</sup> / subst. per site)</td></tr>
 <tr><td>&nu;</td><td>Variance of branch-specific diffusivity parameters (on a log scale)</td></tr>
 </table><br>
-The first line of the <tt>.struct</tt> file contains the names of the parameters, and each column contains a set of posterior
+The first line of the <tt>.struct.params</tt> file contains the names of the parameters, and each column contains a set of posterior
 samples for the specified parameter. Each row corresponds to one MCMC iteration, beginning after the burn-in period has ended.
 <br><br>
 The RMSD trace can be switched on via the <a href="#io_parameters">Output settings</a> menu. 

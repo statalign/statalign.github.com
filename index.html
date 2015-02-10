@@ -35,13 +35,40 @@
 
 	<div class="pad">
 	<div class="container">
+		<h3>What is StatAlign?</h3>
+		<i>StatAlign</i> is an extendable software package for Bayesian analysis of protein, DNA and RNA sequences. Multiple alignments, phylogenetic trees and evolutionary parameters	are co-estimated in a Markov Chain Monte Carlo framework, allowing for reliable quantification of the uncertainty in these estimates.
+		<p>
+		This approach accounts for the inherent interdependence between estimation of alignments and phylogenies, avoiding the inherent bias present in traditional methods that rely on a single alignment. This helps to avoid artifacts such as those resulting from the choice of guide tree when constructing alignments.
+		<p>
+		The models behind the analysis permit the comparison of evolutionarily distant sequences. The TKF92 insertion-deletion model allows for indel information to be used to help inform phylogeny estimation, and can be coupled with a wide variety of substitution models. A broad range of models for nucleotide and amino acid data is included in the package and the plugin management system ensures that new models can be easily added.
+		<p>
+		StatAlign also includes model extension plugins capable of incorporating protein and RNA structural information, thereby increasing the reliability of the inference.
+		<p>
+		  Although the increased computational overheads of this approach limit its application to smaller datasets (we have tested up to 20-30 sequences), the probabilistic nature of the model allows for more reliable information to be obtained from smaller datasets, and enables the uncertainty in the results to be quantified more accurately. We are currently working on a parallelised version that will extend the capabilities of StatAlign to much larger datasets.
+		 <p>
+
+		<p>
+		<p>StatAlign is available from the <a href="downloads.html">Downloads</a> page.<br><br>
+		For more information, please see our papers on the <a href="references.html">References</a> page.
+		<br><br>
+
 		<h3>Recent news</h3>
+		<font size="-1"><i>10 Feb 2015</i></font><br>
+		<p>
+		StatAlign v3.2 is released (<a href="https://raw.github.com/statalign/statalign/master/CHANGELOG.txt" target="_blank">What's new in this version?</a>)
+		<p>
+		Joint sequence-structure analysis is now possible for cases where only some sequences have known structure, expanding the range of datasets that can be analysed using the StructAlign plugin.
+		<p>
+		<font size="-1"><i>4 Jun 2014</i></font><br>
+		<p>
+		Paper describing StructAlign published in <i>Molecular Biology and Evolution:</i><br><br>
+		Herman JL, Challis CJ, Nov&aacute;k &Aacute;, Hein J and Schmidler, SC (2014) Simultaneous Bayesian estimation of alignment and phylogeny under a joint model of protein sequence and structure. <i>Molecular Biology and Evolution</i>, <b>31</b>(9):2251-2266. <a href="http://www.ncbi.nlm.nih.gov/pubmed/24899668" target="_blank">PubMed</a> <a href="http://mbe.oxfordjournals.org/content/31/9/2251" target="_blank">MBE website</a>
+		<p>
 		<font size="-1"><i>24 Nov 2013</i></font><br>
 		<p>
 		StatAlign v3.1 is out! (<a href="https://raw.github.com/statalign/statalign/master/CHANGELOG.txt" target="_blank">What's new in this version?</a>)
 		<p>
-		We have added support for analysing PDB files directly in our recently created protein structural alignment plugin. It is now possible to utilise structural information from PDB files when sampling alignments and phylogenies &ndash; in a coherent Bayesian statistical model. More details in a paper soon!
-		<p>StatAlign is available from the <a href="downloads.html">Downloads</a> page.<br><br>
+		Proposal variance for substitution parameter is now tuned automatically. The StructAlign plugin can now read and write from PDB files, and the maximum likelihood structural superposition is written to a PDB file. Structural B-factors and pairwise RMSDs are used to annotate the current alignment sample in GUI mode.
 		<p>
 		<font size="-1"><i>26 Oct 2013</i></font><br>
 		<p>
@@ -72,27 +99,6 @@
 		page and on <a href="http://www.ncbi.nlm.nih.gov/pubmed/23335014"
 		target="_blank">PubMed</a>.
 		
-		<br><br>
-		<h4>What is StatAlign?</h4>
-		<i>StatAlign</i> is an extendable software package for Bayesian
-		analysis of Protein, DNA and RNA sequences.
-		Multiple alignments, phylogenetic trees and evolutionary parameters
-		are co-estimated in a Markov Chain Monte Carlo framework, allowing
-		for reliable measurement of the accuracy of the results.
-		<p>
-		This approach eliminates common artifacts that traditional methods
-		suffer from, at the cost of increased computational time. These
-		artifacts include the dependency of the constructed phylogeny on a
-		single (probably suboptimal) alignment and bias towards the guide
-		tree upon which the alignment relies.
-		<p>
-		The models behind the analysis permit the comparison of evolutionarily
-		distant sequences: the TKF92 insertion-deletion model can be coupled
-		to an arbitrary substitution model. A broad range of models for
-		nucleotide and amino acid data is included in the package and the
-		plug-in management system ensures that new models can be easily added.
-		<p>
-		For more information, please see our papers on the <a href="references.html">References</a> page.
 		<br><br>
 	</div>
 	</div>
